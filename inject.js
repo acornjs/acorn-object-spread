@@ -6,7 +6,7 @@ module.exports = function(acorn) {
 
   // this is the same parseObj that acorn has with...
   function parseObj(isPattern, refDestructuringErrors) {
-    let node = this.startNode(), first = true, propHash = {}
+    var node = this.startNode(), first = true, propHash = {}
     node.properties = []
     this.next()
     while (!this.eat(tt.braceR)) {
@@ -15,7 +15,7 @@ module.exports = function(acorn) {
         if (this.afterTrailingComma(tt.braceR)) break
       } else first = false
   
-      let prop = this.startNode(), isGenerator, isAsync, startPos, startLoc
+      var prop = this.startNode(), isGenerator, isAsync, startPos, startLoc
       if (this.options.ecmaVersion >= 6) {
   
         // ...the spread logic borrowed from babylon :)
