@@ -21,7 +21,7 @@ module.exports = function(acorn) {
         // ...the spread logic borrowed from babylon :)
         if (this.type === tt.ellipsis) {
           prop = this.parseSpread()
-          prop.type = isPattern ? "RestElement" : "SpreadElement"
+          prop.type = isPattern ? "RestProperty" : "SpreadProperty"
           node.properties.push(prop)
           continue
         }
