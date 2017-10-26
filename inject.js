@@ -15,7 +15,7 @@ module.exports = function(acorn) {
         if (this.afterTrailingComma(tt.braceR)) break
       } else first = false
 
-      let prop = this.startNode(), isGenerator, startPos, startLoc
+      let prop = this.startNode(), isGenerator, isAsync, startPos, startLoc
       if (this.options.ecmaVersion >= 6) {
         // ...the spread logic borrowed from babylon :)
         if (this.type === tt.ellipsis) {
@@ -35,7 +35,13 @@ module.exports = function(acorn) {
           isGenerator = this.eat(tt.star)
       }
       this.parsePropertyName(prop)
-      this.parsePropertyValue(prop, isPattern, isGenerator, startPos, startLoc, refDestructuringErrors)
+      if (!isPattern && this.options.ecmaVersion >= 8 && !isGenerator && this.isAsyncProp(prop)) {
+        isAsync = true
+        this.parsePropertyName(prop, refDestructuringErrors)
+      } else {
+        isAsync = false
+      }
+      this.parsePropertyValue(prop, isPattern, isGenerator, isAsync, startPos, startLoc, refDestructuringErrors)
       this.checkPropClash(prop, propHash)
       node.properties.push(this.finishNode(prop, "Property"))
     }
