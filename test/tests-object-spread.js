@@ -208,7 +208,8 @@ var fbTestFixture = {
                   }
                 },
                 "name": "x"
-              }
+              },
+              "kind": "init"
             },
             {
               "type": "SpreadProperty",
@@ -322,7 +323,8 @@ var fbTestFixture = {
                 }
               },
               "name": "x"
-            }
+            },
+            "kind": "init"
           },
           {
             "type": "SpreadProperty",
@@ -403,7 +405,8 @@ var fbTestFixture = {
                 }
               },
               "name": "a"
-            }
+            },
+            "kind": "init"
           },
           {
             "type": "SpreadProperty",
@@ -484,7 +487,8 @@ var fbTestFixture = {
                 }
               },
               "name": "c"
-            }
+            },
+            "kind": "init"
           }
         ]
       }
