@@ -507,7 +507,20 @@ for (var ns in fbTestFixture) {
   for (var code in ns) {
     test(code, {
       type: 'Program',
-      body: [ns[code]]
+      body: [ns[code]],
+      start: 0,
+      end: code.length,
+      loc: {
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 1,
+          "column": code.length
+        }
+      },
+      sourceType: "script"
     }, {
       ecmaVersion: 7,
       locations: true,
