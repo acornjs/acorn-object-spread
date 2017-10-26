@@ -3,6 +3,175 @@
 var fbTestFixture = {
   // Taken and adapted from babylon's tests.
   'ObjectSpread': {
+    'obj = { then: 1, catch: 2 }': {
+      type: "ExpressionStatement",
+      start: 0,
+      end: 27,
+      loc: {
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 1,
+          "column": 27
+        }
+      },
+      expression: {
+        "type": "AssignmentExpression",
+        "start": 0,
+        "end": 27,
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 0
+          },
+          "end": {
+            "line": 1,
+            "column": 27
+          }
+        },
+        "operator": "=",
+        "left": {
+          "type": "Identifier",
+          "start": 0,
+          "end": 3,
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 0
+            },
+            "end": {
+              "line": 1,
+              "column": 3
+            }
+          },
+          "name": "obj"
+        },
+        "right": {
+          "type": "ObjectExpression",
+          "start": 6,
+          "end": 27,
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 6
+            },
+            "end": {
+              "line": 1,
+              "column": 27
+            }
+          },
+          "properties": [
+            {
+              "type": "Property",
+              "start": 8,
+              "end": 15,
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 8
+                },
+                "end": {
+                  "line": 1,
+                  "column": 15
+                }
+              },
+              "method": false,
+              "shorthand": false,
+              "computed": false,
+              "key": {
+                "type": "Identifier",
+                "start": 8,
+                "end": 12,
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 8
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 12
+                  }
+                },
+                "name": "then"
+              },
+              "value": {
+                "type": "Literal",
+                "start": 14,
+                "end": 15,
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 14
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 15
+                  }
+                },
+                "value": 1,
+                "raw": "1"
+              },
+              "kind": "init"
+            },
+            {
+              "type": "Property",
+              "start": 17,
+              "end": 25,
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 17
+                },
+                "end": {
+                  "line": 1,
+                  "column": 25
+                }
+              },
+              "method": false,
+              "shorthand": false,
+              "computed": false,
+              "key": {
+                "type": "Identifier",
+                "start": 17,
+                "end": 22,
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 17
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 22
+                  }
+                },
+                "name": "catch"
+              },
+              "value": {
+                "type": "Literal",
+                "start": 24,
+                "end": 25,
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 24
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 25
+                  }
+                },
+                "value": 2,
+                "raw": "2"
+              },
+              "kind": "init"
+            }
+          ]
+        }
+      }
+    },
+
     'let z = {...x}': {
       "type": "VariableDeclaration",
       "start": 0,
