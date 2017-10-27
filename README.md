@@ -9,13 +9,13 @@ This is plugin for [Acorn](http://marijnhaverbeke.nl/acorn/) - a tiny, fast Java
 You can use this module directly in order to get Acorn instance with plugin installed:
 
 ```javascript
-var acorn = require('acorn-object-spread');
+var acorn = require('acorn5-object-spread');
 ```
 
 Or you can use `inject.js` for injecting plugin into your own version of Acorn like this:
 
 ```javascript
-var acorn = require('acorn-object-spread/inject')(require('./custom-acorn'));
+var acorn = require('acorn5-object-spread/inject')(require('./custom-acorn'));
 ```
 
 Then, use the `plugins` option whenever you need to support objectSpread while parsing:
