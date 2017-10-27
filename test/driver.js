@@ -41,7 +41,6 @@ exports.runTests = function(config, callback) {
                                "\n  Assertion failed:\n " + error);
         else callback("ok", test.code);
       } else {
-        mangle(test.ast);
         var mis = misMatch(test.ast, ast);
         for (var name in expected) {
           if (mis) break;
@@ -94,21 +93,10 @@ var misMatch = exports.misMatch = function(exp, act) {
       if (mis) return addPath(mis, prop);
     }
     for (var prop in act) {
-      if (!(prop in exp) && typeof act[prop] !== "function") {
+      if (!(prop in exp)) {
         var mis = misMatch(exp[prop], act[prop]);
         if (mis) return addPath(mis, prop);
       }
     }
   }
 };
-
-function mangle(ast) {
-  if (typeof ast != "object" || !ast) return;
-  if (ast.slice) {
-    for (var i = 0; i < ast.length; ++i) mangle(ast[i]);
-  } else {
-    var range = "loc" in ast && "start" in ast && "end" in ast && [ast.start, ast.end];
-    for (var name in ast) if (ast.hasOwnProperty(name)) mangle(ast[name]);
-    if (range) ast.range = range;
-  }
-}
