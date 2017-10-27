@@ -1,6 +1,9 @@
 'use strict';
 
 module.exports = function(acorn) {
+  if (acorn.version.substr(0, 1) !== "5") {
+    throw new Error("Unsupported acorn version " + acorn.version + ", please use acorn 5");
+  }
   var tt = acorn.tokTypes;
   var pp = acorn.Parser.prototype;
 
