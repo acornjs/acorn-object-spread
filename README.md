@@ -1,7 +1,6 @@
-# ObjectSpread support in acorn
+# ObjectSpread support in acorn 5
 
-[![Build Status](https://travis-ci.org/UXtemple/acorn-object-spread.svg?branch=master)](https://travis-ci.org/UXtemple/acorn-object-spread)
-[![NPM version](https://img.shields.io/npm/v/acorn-object-spread.svg)](https://www.npmjs.org/package/acorn-object-spread)
+[![NPM version](https://img.shields.io/npm/v/acorn5-object-spread.svg)](https://www.npmjs.org/package/acorn5-object-spread)
 
 This is plugin for [Acorn](http://marijnhaverbeke.nl/acorn/) - a tiny, fast JavaScript parser, written completely in JavaScript.
 

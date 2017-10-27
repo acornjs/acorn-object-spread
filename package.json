@@ -1,11 +1,11 @@
 {
-  "name": "acorn-object-spread",
-  "description": "Support object spread in acorn",
-  "homepage": "https://github.com/UXtemple/acorn-object-spread",
+  "name": "acorn5-object-spread",
+  "description": "Support object spread in acorn 5",
+  "homepage": "https://github.com/adrianheine/acorn5-object-spread",
   "author": "Darío Javier Cravero <dario@uxtemple.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/UXtemple/acorn-object-spread"
+    "url": "https://github.com/adrianheine/acorn5-object-spread"
   },
   "license": "MIT",
   "scripts": {
@@ -14,5 +14,5 @@
   "dependencies": {
     "acorn": "^5.1.2"
   },
-  "version": "1.0.0"
+  "version": "2.0.0"
 }
