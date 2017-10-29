@@ -1,67 +1,11 @@
 'use strict';
 
 module.exports = function(acorn) {
-  if (acorn.version.substr(0, 1) !== "5") {
-    throw new Error("Unsupported acorn version " + acorn.version + ", please use acorn 5");
+  let acornVersion = acorn.version.match(/^5\.(\d+)\./)
+  if (!acornVersion || Number(acornVersion[1]) < 2) {
+    throw new Error("Unsupported acorn version " + acorn.version + ", please use acorn 5 >= 5.2");
   }
   var tt = acorn.tokTypes;
-  var pp = acorn.Parser.prototype;
-
-  // this is the same parseObj that acorn has with...
-  function parseObj(isPattern, refDestructuringErrors) {
-    let node = this.startNode(), first = true, propHash = {}
-    node.properties = []
-    this.next()
-    while (!this.eat(tt.braceR)) {
-      if (!first) {
-        this.expect(tt.comma)
-        if (this.afterTrailingComma(tt.braceR)) break
-      } else first = false
-
-      let prop = this.startNode(), isGenerator, isAsync, startPos, startLoc
-      if (this.options.ecmaVersion >= 6) {
-        // ...the spread logic borrowed from babylon :)
-        if (this.type === tt.ellipsis) {
-          if (isPattern) {
-            this.next()
-            prop.argument = this.parseIdent()
-            this.finishNode(prop, "RestElement")
-          } else {
-            prop = this.parseSpread(refDestructuringErrors)
-          }
-          node.properties.push(prop)
-          if (this.type === tt.comma) {
-            if (isPattern) {
-              this.raise(this.start, "Comma is not permitted after the rest element")
-            } else if (refDestructuringErrors && refDestructuringErrors.trailingComma < 0) {
-              refDestructuringErrors.trailingComma = this.start
-            }
-          }
-          continue
-        }
-
-        prop.method = false
-        prop.shorthand = false
-        if (isPattern || refDestructuringErrors) {
-          startPos = this.start
-          startLoc = this.startLoc
-        }
-        if (!isPattern)
-          isGenerator = this.eat(tt.star)
-      }
-      this.parsePropertyName(prop)
-      if (!isPattern && this.options.ecmaVersion >= 8 && !isGenerator && this.isAsyncProp(prop)) {
-        isAsync = true
-        this.parsePropertyName(prop, refDestructuringErrors)
-      } else {
-        isAsync = false
-      }
-      this.parsePropertyValue(prop, isPattern, isGenerator, isAsync, startPos, startLoc, refDestructuringErrors)
-      if (!isPattern) this.checkPropClash(prop, propHash)
-      node.properties.push(this.finishNode(prop, "Property"))
-    }
-    return this.finishNode(node, isPattern ? "ObjectPattern" : "ObjectExpression")
-  }
 
   const getCheckLVal = origCheckLVal => function (expr, bindingType, checkClashes) {
     if (expr.type == "ObjectPattern") {
@@ -76,7 +20,33 @@ module.exports = function(acorn) {
   }
 
   acorn.plugins.objectSpread = function objectSpreadPlugin(instance) {
-    pp.parseObj = parseObj;
+    instance.extend("parseProperty", nextMethod => function (isPattern, refDestructuringErrors) {
+      if (this.options.ecmaVersion >= 6 && this.type === tt.ellipsis) {
+        let prop
+        if (isPattern) {
+          prop = this.startNode()
+          this.next()
+          prop.argument = this.parseIdent()
+          this.finishNode(prop, "RestElement")
+        } else {
+          prop = this.parseSpread(refDestructuringErrors)
+        }
+        if (this.type === tt.comma) {
+          if (isPattern) {
+            this.raise(this.start, "Comma is not permitted after the rest element")
+          } else if (refDestructuringErrors && refDestructuringErrors.trailingComma < 0) {
+            refDestructuringErrors.trailingComma = this.start
+          }
+        }
+        return prop
+      }
+
+      return nextMethod.apply(this, arguments)
+    })
+    instance.extend("checkPropClash", nextMethod => function(prop, propHash) {
+      if (prop.type == "SpreadElement" || prop.type == "RestElement") return
+      return nextMethod.apply(this, arguments)
+    })
     instance.extend("checkLVal", getCheckLVal)
     instance.extend("toAssignable", nextMethod => function(node, isBinding) {
       if (this.options.ecmaVersion >= 6 && node) {
