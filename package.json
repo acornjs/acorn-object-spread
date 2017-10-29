@@ -1,8 +1,11 @@
 {
   "name": "acorn5-object-spread",
-  "description": "Support object spread in acorn 5",
+  "description": "Support for rest and spread properties in acorn 5",
   "homepage": "https://github.com/adrianheine/acorn5-object-spread",
-  "author": "Darío Javier Cravero <dario@uxtemple.com>",
+  "contributors": [
+    "Darío Javier Cravero <dario@uxtemple.com>",
+    "Adrian Heine <mail@adrianheine.de>"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/adrianheine/acorn5-object-spread"
