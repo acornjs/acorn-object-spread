@@ -261,6 +261,126 @@ var fbTestFixture = {
           }
         ]
       }
+    },
+  },
+  'ObjectRest': {
+    'let {x, ...y} = v': {
+      "type": "VariableDeclaration",
+      "start": 0,
+      "end": 17,
+      "declarations": [
+        {
+          "type": "VariableDeclarator",
+          "start": 4,
+          "end": 17,
+          "id": {
+            "type": "ObjectPattern",
+            "start": 4,
+            "end": 13,
+            "properties": [
+              {
+                "type": "Property",
+                "start": 5,
+                "end": 6,
+                "method": false,
+                "shorthand": true,
+                "computed": false,
+                "key": {
+                  "type": "Identifier",
+                  "start": 5,
+                  "end": 6,
+                  "name": "x"
+                },
+                "kind": "init",
+                "value": {
+                  "type": "Identifier",
+                  "start": 5,
+                  "end": 6,
+                  "name": "x"
+                }
+              },
+              {
+                "type": "RestProperty",
+                "start": 8,
+                "end": 12,
+                "argument": {
+                  "type": "Identifier",
+                  "start": 11,
+                  "end": 12,
+                  "name": "y"
+                }
+              }
+            ]
+          },
+          "init": {
+            "type": "Identifier",
+            "start": 16,
+            "end": 17,
+            "name": "v"
+          }
+        }
+      ],
+      "kind": "let"
+    },
+    '(function({x, ...y}) {})': {
+      "type": "ExpressionStatement",
+      "start": 0,
+      "end": 24,
+      "expression": {
+        "type": "FunctionExpression",
+        "start": 1,
+        "end": 23,
+        "id": null,
+        "generator": false,
+        "expression": false,
+        "params": [
+          {
+            "type": "ObjectPattern",
+            "start": 10,
+            "end": 19,
+            "properties": [
+              {
+                "type": "Property",
+                "start": 11,
+                "end": 12,
+                "method": false,
+                "shorthand": true,
+                "computed": false,
+                "key": {
+                  "type": "Identifier",
+                  "start": 11,
+                  "end": 12,
+                  "name": "x"
+                },
+                "kind": "init",
+                "value": {
+                  "type": "Identifier",
+                  "start": 11,
+                  "end": 12,
+                  "name": "x"
+                }
+              },
+              {
+                "type": "RestProperty",
+                "start": 14,
+                "end": 18,
+                "argument": {
+                  "type": "Identifier",
+                  "start": 17,
+                  "end": 18,
+                  "name": "y"
+                }
+              }
+            ]
+          }
+        ],
+        "body": {
+          "type": "BlockStatement",
+          "start": 21,
+          "end": 23,
+          "body": []
+        }
+      }
     }
   }
 };

@@ -51,8 +51,22 @@ module.exports = function(acorn) {
     return this.finishNode(node, isPattern ? "ObjectPattern" : "ObjectExpression")
   }
 
+  const getCheckLVal = origCheckLVal => function (expr, bindingType, checkClashes) {
+    if (expr.type == "ObjectPattern") {
+      for (let prop of expr.properties)
+        this.checkLVal(prop, bindingType, checkClashes)
+      return
+    } else if (expr.type === "Property") {
+      return this.checkLVal(expr.value, bindingType, checkClashes)
+    } else if (expr.type === "RestProperty") {
+      return this.checkLVal(expr.argument, bindingType, checkClashes)
+    }
+    return origCheckLVal.apply(this, arguments)
+  }
+
   acorn.plugins.objectSpread = function objectSpreadPlugin(instance) {
     pp.parseObj = parseObj;
+    pp.checkLVal = getCheckLVal(pp.checkLVal)
   };
 
   return acorn;
