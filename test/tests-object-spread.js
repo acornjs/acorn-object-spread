@@ -93,7 +93,7 @@ var fbTestFixture = {
             "end": 14,
             "properties": [
               {
-                "type": "SpreadProperty",
+                "type": "SpreadElement",
                 "start": 9,
                 "end": 13,
                 "argument": {
@@ -151,7 +151,7 @@ var fbTestFixture = {
               "kind": "init"
             },
             {
-              "type": "SpreadProperty",
+              "type": "SpreadElement",
               "start": 8,
               "end": 12,
               "argument": {
@@ -196,7 +196,7 @@ var fbTestFixture = {
             "kind": "init"
           },
           {
-            "type": "SpreadProperty",
+            "type": "SpreadElement",
             "start": 5,
             "end": 9,
             "argument": {
@@ -228,7 +228,7 @@ var fbTestFixture = {
             "kind": "init"
           },
           {
-            "type": "SpreadProperty",
+            "type": "SpreadElement",
             "start": 14,
             "end": 18,
             "argument": {
@@ -300,7 +300,7 @@ var fbTestFixture = {
                 }
               },
               {
-                "type": "RestProperty",
+                "type": "RestElement",
                 "start": 8,
                 "end": 12,
                 "argument": {
@@ -361,7 +361,7 @@ var fbTestFixture = {
                 }
               },
               {
-                "type": "RestProperty",
+                "type": "RestElement",
                 "start": 14,
                 "end": 18,
                 "argument": {
