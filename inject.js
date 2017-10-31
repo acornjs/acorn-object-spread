@@ -65,7 +65,7 @@ module.exports = function(acorn) {
 
   acorn.plugins.objectSpread = function objectSpreadPlugin(instance) {
     pp.parseObj = parseObj;
-    pp.checkLVal = getCheckLVal(pp.checkLVal)
+    instance.extend("checkLVal", getCheckLVal)
   };
 
   return acorn;
