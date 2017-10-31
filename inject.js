@@ -22,8 +22,7 @@ module.exports = function(acorn) {
       if (this.options.ecmaVersion >= 6) {
         // ...the spread logic borrowed from babylon :)
         if (this.type === tt.ellipsis) {
-          prop = this.parseSpread()
-          prop.type = isPattern ? "RestElement" : "SpreadElement"
+          prop = isPattern ? this.parseRestBinding() : this.parseSpread()
           node.properties.push(prop)
           continue
         }
