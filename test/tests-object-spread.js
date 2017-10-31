@@ -262,6 +262,93 @@ var fbTestFixture = {
         ]
       }
     },
+    "var someObject = { someKey: { ...mapGetters([ 'some_val_1', 'some_val_2' ]) } }": {
+      "type": "VariableDeclaration",
+      "start": 0,
+      "end": 79,
+      "declarations": [
+        {
+          "type": "VariableDeclarator",
+          "start": 4,
+          "end": 79,
+          "id": {
+            "type": "Identifier",
+            "start": 4,
+            "end": 14,
+            "name": "someObject"
+          },
+          "init": {
+            "type": "ObjectExpression",
+            "start": 17,
+            "end": 79,
+            "properties": [
+              {
+                "type": "Property",
+                "start": 19,
+                "end": 77,
+                "method": false,
+                "shorthand": false,
+                "computed": false,
+                "key": {
+                  "type": "Identifier",
+                  "start": 19,
+                  "end": 26,
+                  "name": "someKey"
+                },
+                "value": {
+                  "type": "ObjectExpression",
+                  "start": 28,
+                  "end": 77,
+                  "properties": [
+                    {
+                      "type": "SpreadElement",
+                      "start": 30,
+                      "end": 75,
+                      "argument": {
+                        "type": "CallExpression",
+                        "start": 33,
+                        "end": 75,
+                        "callee": {
+                          "type": "Identifier",
+                          "start": 33,
+                          "end": 43,
+                          "name": "mapGetters"
+                        },
+                        "arguments": [
+                          {
+                            "type": "ArrayExpression",
+                            "start": 44,
+                            "end": 74,
+                            "elements": [
+                              {
+                                "type": "Literal",
+                                "start": 46,
+                                "end": 58,
+                                "value": "some_val_1",
+                                "raw": "'some_val_1'"
+                              },
+                              {
+                                "type": "Literal",
+                                "start": 60,
+                                "end": 72,
+                                "value": "some_val_2",
+                                "raw": "'some_val_2'"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "kind": "init"
+              }
+            ]
+          }
+        }
+      ],
+      "kind": "var"
+    }
   },
   'ObjectRest': {
     'let {x, ...y} = v': {
