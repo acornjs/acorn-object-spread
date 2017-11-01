@@ -58,8 +58,6 @@ module.exports = function(acorn) {
       return
     } else if (expr.type === "Property") {
       return this.checkLVal(expr.value, bindingType, checkClashes)
-    } else if (expr.type === "RestProperty") {
-      return this.checkLVal(expr.argument, bindingType, checkClashes)
     }
     return origCheckLVal.apply(this, arguments)
   }
