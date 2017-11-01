@@ -33,8 +33,9 @@ var ast = acorn.parse(code, {
 [acorn-object-rest-spread](https://github.com/victor-homyakov/acorn-object-rest-spread)
 is another acorn plugin implementing the same spec. There are some differences, though:
 
-* acorn-object-rest-spread overwrites acorn`s `parseObj` with a modified copy from acorn 4,
+* acorn-object-rest-spread overwrites acorn's `parseObj` with a modified copy from acorn 4,
   so that an acorn instance with that plugin cannot for example parse `({async, foo})`
+  and [wrongly complains about duplicate property names in patterns](https://github.com/ternjs/acorn/commit/4ee71d7c67f73c407c5f6e28f743858b936ea885).
 * acorn-object-rest-spread emits `SpreadElement`s with a
   [non-standard](https://github.com/estree/estree/blob/master/es2015.md#expressions)
   `value` property
