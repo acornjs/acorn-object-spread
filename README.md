@@ -27,6 +27,21 @@ var ast = acorn.parse(code, {
   plugins: { objectSpread: true }
 });
 ```
+
+## Differences to acorn-object-rest-spread
+
+[acorn-object-rest-spread](https://github.com/victor-homyakov/acorn-object-rest-spread)
+is another acorn plugin implementing the same spec. There are some differences, though:
+
+* acorn-object-rest-spread overwrites acorn`s `parseObj` with a modified copy from acorn 4,
+  so that an acorn instance with that plugin cannot for example parse `({async, foo})`
+* acorn-object-rest-spread emits `SpreadElement`s with a
+  [non-standard](https://github.com/estree/estree/blob/master/es2015.md#expressions)
+  `value` property
+* acorn-object-rest-spread emits `SpreadElement`s in arrow function argument patterns
+  and nested object patterns were it should emit `RestElement`s
+* acorn-object-rest-spread doesn't check for invalid trailing commas in rest properties
+
 ## License
 
 This plugin is issued under the [MIT license](./LICENSE).
