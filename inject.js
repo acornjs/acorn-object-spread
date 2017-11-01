@@ -22,8 +22,15 @@ module.exports = function(acorn) {
       if (this.options.ecmaVersion >= 6) {
         // ...the spread logic borrowed from babylon :)
         if (this.type === tt.ellipsis) {
-          prop = isPattern ? this.parseRestBinding() : this.parseSpread()
+          prop = isPattern ? this.parseRestBinding() : this.parseSpread(refDestructuringErrors)
           node.properties.push(prop)
+          if (this.type === tt.comma) {
+            if (isPattern) {
+              this.raise(this.start, "Comma is not permitted after the rest element")
+            } else if (refDestructuringErrors && refDestructuringErrors.trailingComma < 0) {
+              refDestructuringErrors.trailingComma = this.start
+            }
+          }
           continue
         }
 

@@ -761,6 +761,9 @@ if (typeof exports !== "undefined") {
 }
 
 testFail("({get x() {}}) => {}", "Object pattern can't contain getter or setter (1:6)")
+testFail("let {...x, ...y} = {}", "Comma is not permitted after the rest element (1:9)")
+testFail("({...x,}) => z", "Comma is not permitted after the rest element (1:6)")
+testFail("({...{...x,}}) => z", "Comma is not permitted after the rest element (1:10)")
 
 for (var ns in fbTestFixture) {
   ns = fbTestFixture[ns];
