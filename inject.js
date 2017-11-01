@@ -90,6 +90,18 @@ module.exports = function(acorn) {
       }
       return nextMethod.apply(this, arguments)
     })
+    instance.extend("checkPatternExport", nextMethod => function(exports, pat) {
+      if (pat.type == "ObjectPattern") {
+        for (let prop of pat.properties)
+          this.checkPatternExport(exports, prop)
+        return
+      } else if (pat.type === "Property") {
+        return this.checkPatternExport(exports, pat.value)
+      } else if (pat.type === "RestElement") {
+        return this.checkPatternExport(exports, pat.argument)
+      }
+      nextMethod.apply(this, arguments)
+    })
   };
 
   return acorn;

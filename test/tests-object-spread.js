@@ -764,6 +764,9 @@ testFail("({get x() {}}) => {}", "Object pattern can't contain getter or setter 
 testFail("let {...x, ...y} = {}", "Comma is not permitted after the rest element (1:9)")
 testFail("({...x,}) => z", "Comma is not permitted after the rest element (1:6)")
 testFail("({...{...x,}}) => z", "Comma is not permitted after the rest element (1:10)")
+testFail("export const { foo, ...bar } = baz;\nexport const bar = 1;\n", "Identifier 'bar' has already been declared (2:13)", {
+  sourceType: "module"
+})
 
 for (var ns in fbTestFixture) {
   ns = fbTestFixture[ns];
