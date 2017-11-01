@@ -65,6 +65,24 @@ module.exports = function(acorn) {
   acorn.plugins.objectSpread = function objectSpreadPlugin(instance) {
     pp.parseObj = parseObj;
     instance.extend("checkLVal", getCheckLVal)
+    instance.extend("toAssignable", nextMethod => function(node, isBinding) {
+      if (this.options.ecmaVersion >= 6 && node) {
+        if (node.type == "ObjectExpression") {
+          node.type = "ObjectPattern"
+          for (let prop of node.properties)
+            this.toAssignable(prop, isBinding)
+          return node
+        } else if (node.type === "Property") {
+          // AssignmentProperty has type == "Property"
+          if (node.kind !== "init") this.raise(node.key.start, "Object pattern can't contain getter or setter")
+          return this.toAssignable(node.value, isBinding)
+        } else if (node.type === "SpreadElement") {
+          node.type = "RestElement"
+          return this.toAssignable(node.argument, isBinding)
+        }
+      }
+      return nextMethod.apply(this, arguments)
+    })
   };
 
   return acorn;

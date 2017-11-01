@@ -640,6 +640,116 @@ var fbTestFixture = {
         }
       ],
       "kind": "let"
+    },
+    'const fn = ({text = "default", ...props}) => text + props.children': {
+      "type": "VariableDeclaration",
+      "start": 0,
+      "end": 66,
+      "declarations": [
+        {
+          "type": "VariableDeclarator",
+          "start": 6,
+          "end": 66,
+          "id": {
+            "type": "Identifier",
+            "start": 6,
+            "end": 8,
+            "name": "fn"
+          },
+          "init": {
+            "type": "ArrowFunctionExpression",
+            "start": 11,
+            "end": 66,
+            "id": null,
+            "generator": false,
+            "expression": true,
+            "params": [
+              {
+                "type": "ObjectPattern",
+                "start": 12,
+                "end": 40,
+                "properties": [
+                  {
+                    "type": "Property",
+                    "start": 13,
+                    "end": 29,
+                    "method": false,
+                    "shorthand": true,
+                    "computed": false,
+                    "key": {
+                      "type": "Identifier",
+                      "start": 13,
+                      "end": 17,
+                      "name": "text"
+                    },
+                    "kind": "init",
+                    "value": {
+                      "type": "AssignmentPattern",
+                      "start": 13,
+                      "end": 29,
+                      "left": {
+                        "type": "Identifier",
+                        "start": 13,
+                        "end": 17,
+                        "name": "text"
+                      },
+                      "right": {
+                        "type": "Literal",
+                        "start": 20,
+                        "end": 29,
+                        "value": "default",
+                        "raw": "\"default\""
+                      }
+                    }
+                  },
+                  {
+                    "type": "RestElement",
+                    "start": 31,
+                    "end": 39,
+                    "argument": {
+                      "type": "Identifier",
+                      "start": 34,
+                      "end": 39,
+                      "name": "props"
+                    }
+                  }
+                ]
+              }
+            ],
+            "body": {
+              "type": "BinaryExpression",
+              "start": 45,
+              "end": 66,
+              "left": {
+                "type": "Identifier",
+                "start": 45,
+                "end": 49,
+                "name": "text"
+              },
+              "operator": "+",
+              "right": {
+                "type": "MemberExpression",
+                "start": 52,
+                "end": 66,
+                "object": {
+                  "type": "Identifier",
+                  "start": 52,
+                  "end": 57,
+                  "name": "props"
+                },
+                "property": {
+                  "type": "Identifier",
+                  "start": 58,
+                  "end": 66,
+                  "name": "children"
+                },
+                "computed": false
+              }
+            }
+          }
+        }
+      ],
+      "kind": "const"
     }
   }
 };
@@ -649,6 +759,8 @@ if (typeof exports !== "undefined") {
   var testFail = require("./driver.js").testFail;
   var tokTypes = require("../").tokTypes;
 }
+
+testFail("({get x() {}}) => {}", "Object pattern can't contain getter or setter (1:6)")
 
 for (var ns in fbTestFixture) {
   ns = fbTestFixture[ns];
