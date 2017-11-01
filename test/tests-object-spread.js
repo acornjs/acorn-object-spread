@@ -2,7 +2,77 @@
 
 var fbTestFixture = {
   // Taken and adapted from babylon's tests.
-  'ObjectSpread': {
+  parseObj: {
+    "function fn({__proto__: a, __proto__: b}) {}": {
+      "type": "FunctionDeclaration",
+      "start": 0,
+      "end": 44,
+      "id": {
+        "type": "Identifier",
+        "start": 9,
+        "end": 11,
+        "name": "fn"
+      },
+      "generator": false,
+      "expression": false,
+      "params": [
+        {
+          "type": "ObjectPattern",
+          "start": 12,
+          "end": 40,
+          "properties": [
+            {
+              "type": "Property",
+              "start": 13,
+              "end": 25,
+              "method": false,
+              "shorthand": false,
+              "computed": false,
+              "key": {
+                "type": "Identifier",
+                "start": 13,
+                "end": 22,
+                "name": "__proto__"
+              },
+              "value": {
+                "type": "Identifier",
+                "start": 24,
+                "end": 25,
+                "name": "a"
+              },
+              "kind": "init"
+            },
+            {
+              "type": "Property",
+              "start": 27,
+              "end": 39,
+              "method": false,
+              "shorthand": false,
+              "computed": false,
+              "key": {
+                "type": "Identifier",
+                "start": 27,
+                "end": 36,
+                "name": "__proto__"
+              },
+              "value": {
+                "type": "Identifier",
+                "start": 38,
+                "end": 39,
+                "name": "b"
+              },
+              "kind": "init"
+            }
+          ]
+        }
+      ],
+      "body": {
+        "type": "BlockStatement",
+        "start": 42,
+        "end": 44,
+        "body": []
+      }
+    },
     'obj = { then: 1, catch: 2 }': {
       type: "ExpressionStatement",
       start: 0,
@@ -70,8 +140,9 @@ var fbTestFixture = {
           ]
         }
       }
-    },
-
+    }
+  },
+  'ObjectSpread': {
     'let z = {...x}': {
       "type": "VariableDeclaration",
       "start": 0,

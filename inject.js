@@ -51,7 +51,7 @@ module.exports = function(acorn) {
         isAsync = false
       }
       this.parsePropertyValue(prop, isPattern, isGenerator, isAsync, startPos, startLoc, refDestructuringErrors)
-      this.checkPropClash(prop, propHash)
+      if (!isPattern) this.checkPropClash(prop, propHash)
       node.properties.push(this.finishNode(prop, "Property"))
     }
     return this.finishNode(node, isPattern ? "ObjectPattern" : "ObjectExpression")
