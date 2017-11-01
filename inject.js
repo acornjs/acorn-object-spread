@@ -57,6 +57,7 @@ module.exports = function(acorn) {
         this.checkLVal(prop, bindingType, checkClashes)
       return
     } else if (expr.type === "Property") {
+      // AssignmentProperty has type == "Property"
       return this.checkLVal(expr.value, bindingType, checkClashes)
     }
     return origCheckLVal.apply(this, arguments)
