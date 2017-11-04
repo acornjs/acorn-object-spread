@@ -1,5 +1,10 @@
 # acorn5-object-spread changelog
 
+## 4.0.0
+
+* Remove support for complex rest properties since they are forbidded by the
+  spec
+
 ## 3.1.0
 
 * Support complex rest properties like `{...{a = 5, ...as}}`
