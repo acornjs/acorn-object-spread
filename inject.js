@@ -22,7 +22,13 @@ module.exports = function(acorn) {
       if (this.options.ecmaVersion >= 6) {
         // ...the spread logic borrowed from babylon :)
         if (this.type === tt.ellipsis) {
-          prop = isPattern ? this.parseRestBinding() : this.parseSpread(refDestructuringErrors)
+          if (isPattern) {
+            this.next()
+            prop.argument = this.parseIdent()
+            this.finishNode(prop, "RestElement")
+          } else {
+            prop = this.parseSpread(refDestructuringErrors)
+          }
           node.properties.push(prop)
           if (this.type === tt.comma) {
             if (isPattern) {

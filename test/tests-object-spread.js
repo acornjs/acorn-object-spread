@@ -540,178 +540,6 @@ var fbTestFixture = {
         }
       }
     },
-    'let {...{x, y}} = {}': {
-      "type": "VariableDeclaration",
-      "start": 0,
-      "end": 20,
-      "declarations": [
-        {
-          "type": "VariableDeclarator",
-          "start": 4,
-          "end": 20,
-          "id": {
-            "type": "ObjectPattern",
-            "start": 4,
-            "end": 15,
-            "properties": [
-              {
-                "type": "RestElement",
-                "start": 5,
-                "end": 14,
-                "argument": {
-                  "type": "ObjectPattern",
-                  "start": 8,
-                  "end": 14,
-                  "properties": [
-                    {
-                      "type": "Property",
-                      "start": 9,
-                      "end": 10,
-                      "method": false,
-                      "shorthand": true,
-                      "computed": false,
-                      "key": {
-                        "type": "Identifier",
-                        "start": 9,
-                        "end": 10,
-                        "name": "x"
-                      },
-                      "kind": "init",
-                      "value": {
-                        "type": "Identifier",
-                        "start": 9,
-                        "end": 10,
-                        "name": "x"
-                      }
-                    },
-                    {
-                      "type": "Property",
-                      "start": 12,
-                      "end": 13,
-                      "method": false,
-                      "shorthand": true,
-                      "computed": false,
-                      "key": {
-                        "type": "Identifier",
-                        "start": 12,
-                        "end": 13,
-                        "name": "y"
-                      },
-                      "kind": "init",
-                      "value": {
-                        "type": "Identifier",
-                        "start": 12,
-                        "end": 13,
-                        "name": "y"
-                      }
-                    }
-                  ]
-                }
-              }
-            ]
-          },
-          "init": {
-            "type": "ObjectExpression",
-            "start": 18,
-            "end": 20,
-            "properties": []
-          }
-        }
-      ],
-      "kind": "let"
-    },
-    'let {...{...{x, y}}} = {}': {
-      "type": "VariableDeclaration",
-      "start": 0,
-      "end": 25,
-      "declarations": [
-        {
-          "type": "VariableDeclarator",
-          "start": 4,
-          "end": 25,
-          "id": {
-            "type": "ObjectPattern",
-            "start": 4,
-            "end": 20,
-            "properties": [
-              {
-                "type": "RestElement",
-                "start": 5,
-                "end": 19,
-                "argument": {
-                  "type": "ObjectPattern",
-                  "start": 8,
-                  "end": 19,
-                  "properties": [
-                    {
-                      "type": "RestElement",
-                      "start": 9,
-                      "end": 18,
-                      "argument": {
-                        "type": "ObjectPattern",
-                        "start": 12,
-                        "end": 18,
-                        "properties": [
-                          {
-                            "type": "Property",
-                            "start": 13,
-                            "end": 14,
-                            "method": false,
-                            "shorthand": true,
-                            "computed": false,
-                            "key": {
-                              "type": "Identifier",
-                              "start": 13,
-                              "end": 14,
-                              "name": "x"
-                            },
-                            "kind": "init",
-                            "value": {
-                              "type": "Identifier",
-                              "start": 13,
-                              "end": 14,
-                              "name": "x"
-                            }
-                          },
-                          {
-                            "type": "Property",
-                            "start": 16,
-                            "end": 17,
-                            "method": false,
-                            "shorthand": true,
-                            "computed": false,
-                            "key": {
-                              "type": "Identifier",
-                              "start": 16,
-                              "end": 17,
-                              "name": "y"
-                            },
-                            "kind": "init",
-                            "value": {
-                              "type": "Identifier",
-                              "start": 16,
-                              "end": 17,
-                              "name": "y"
-                            }
-                          }
-                        ]
-                      }
-                    }
-                  ]
-                }
-              }
-            ]
-          },
-          "init": {
-            "type": "ObjectExpression",
-            "start": 23,
-            "end": 25,
-            "properties": []
-          }
-        }
-      ],
-      "kind": "let"
-    },
     'const fn = ({text = "default", ...props}) => text + props.children': {
       "type": "VariableDeclaration",
       "start": 0,
@@ -834,10 +662,12 @@ if (typeof exports !== "undefined") {
 testFail("({get x() {}}) => {}", "Object pattern can't contain getter or setter (1:6)")
 testFail("let {...x, ...y} = {}", "Comma is not permitted after the rest element (1:9)")
 testFail("({...x,}) => z", "Comma is not permitted after the rest element (1:6)")
-testFail("({...{...x,}}) => z", "Comma is not permitted after the rest element (1:10)")
 testFail("export const { foo, ...bar } = baz;\nexport const bar = 1;\n", "Identifier 'bar' has already been declared (2:13)", {
   sourceType: "module"
 })
+testFail("function ({...x,}) { z }", "Unexpected token (1:9)")
+testFail("let {...{x, y}} = {}", "Unexpected token (1:8)")
+testFail("let {...{...{x, y}}} = {}", "Unexpected token (1:8)")
 
 for (var ns in fbTestFixture) {
   ns = fbTestFixture[ns];
