@@ -6,7 +6,7 @@ module.exports = function(acorn) {
 
   // this is the same parseObj that acorn has with...
   function parseObj(isPattern, refDestructuringErrors) {
-    let node = this.startNode(), first = true, propHash = {}
+    var node = this.startNode(), first = true, propHash = {}
     node.properties = []
     this.next()
     while (!this.eat(tt.braceR)) {
@@ -14,9 +14,10 @@ module.exports = function(acorn) {
         this.expect(tt.comma)
         if (this.afterTrailingComma(tt.braceR)) break
       } else first = false
-
-      let prop = this.startNode(), isGenerator, startPos, startLoc
+  
+      var prop = this.startNode(), isGenerator, isAsync, startPos, startLoc
       if (this.options.ecmaVersion >= 6) {
+  
         // ...the spread logic borrowed from babylon :)
         if (this.type === tt.ellipsis) {
           prop = this.parseSpread()
@@ -24,7 +25,7 @@ module.exports = function(acorn) {
           node.properties.push(prop)
           continue
         }
-
+  
         prop.method = false
         prop.shorthand = false
         if (isPattern || refDestructuringErrors) {
@@ -35,7 +36,15 @@ module.exports = function(acorn) {
           isGenerator = this.eat(tt.star)
       }
       this.parsePropertyName(prop)
-      this.parsePropertyValue(prop, isPattern, isGenerator, startPos, startLoc, refDestructuringErrors)
+      if (!isPattern && this.options.ecmaVersion >= 8 && !isGenerator && !prop.computed &&
+          prop.key.type === "Identifier" && prop.key.name === "async" && this.type !== tt.parenL &&
+          this.type !== tt.colon && !this.canInsertSemicolon()) {
+        isAsync = true
+        this.parsePropertyName(prop, refDestructuringErrors)
+      } else {
+        isAsync = false
+      }
+      this.parsePropertyValue(prop, isPattern, isGenerator, isAsync, startPos, startLoc, refDestructuringErrors)
       this.checkPropClash(prop, propHash)
       node.properties.push(this.finishNode(prop, "Property"))
     }
