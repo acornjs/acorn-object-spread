@@ -1,5 +1,13 @@
 # acorn5-object-spread changelog
 
+## 5.1.0
+
+* Make plugin compatible with acorn 5.3.x
+
+## 5.0.0
+
+* Require acorn 5.2.x
+
 ## 4.0.0
 
 * Remove support for complex rest properties since they are forbidded by the
