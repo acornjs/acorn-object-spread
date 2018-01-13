@@ -528,6 +528,7 @@ testFail("export const { foo, ...bar } = baz;\nexport const bar = 1;\n", "Identi
 testFail("function ({...x,}) { z }", "Unexpected token (1:9)")
 testFail("let {...{x, y}} = {}", "Unexpected token (1:8)")
 testFail("let {...{...{x, y}}} = {}", "Unexpected token (1:8)")
+testFail("0, {...rest, b} = {}", "Comma is not permitted after the rest element (1:11)")
 
 for (var ns in fbTestFixture) {
   ns = fbTestFixture[ns];

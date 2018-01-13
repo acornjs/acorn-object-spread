@@ -48,20 +48,23 @@ module.exports = function(acorn) {
       return nextMethod.apply(this, arguments)
     })
     instance.extend("checkLVal", getCheckLVal)
-    instance.extend("toAssignable", nextMethod => function(node, isBinding) {
+
+    // This backports toAssignable from 5.3.0 to 5.2.x
+    instance.extend("toAssignable", nextMethod => function(node, isBinding, refDestructuringErrors) {
       if (this.options.ecmaVersion >= 6 && node) {
         if (node.type == "ObjectExpression") {
           node.type = "ObjectPattern"
+          if (refDestructuringErrors) this.checkPatternErrors(refDestructuringErrors, true)
           for (let prop of node.properties)
-            this.toAssignable(prop, isBinding)
+            this.toAssignable(prop, isBinding, refDestructuringErrors)
           return node
         } else if (node.type === "Property") {
           // AssignmentProperty has type == "Property"
           if (node.kind !== "init") this.raise(node.key.start, "Object pattern can't contain getter or setter")
-          return this.toAssignable(node.value, isBinding)
+          return this.toAssignable(node.value, isBinding, refDestructuringErrors)
         } else if (node.type === "SpreadElement") {
           node.type = "RestElement"
-          return this.toAssignable(node.argument, isBinding)
+          return this.toAssignable(node.argument, isBinding, refDestructuringErrors)
         }
       }
       return nextMethod.apply(this, arguments)
