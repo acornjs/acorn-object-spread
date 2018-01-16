@@ -64,11 +64,24 @@ module.exports = function(acorn) {
           return this.toAssignable(node.value, isBinding, refDestructuringErrors)
         } else if (node.type === "SpreadElement") {
           node.type = "RestElement"
-          return this.toAssignable(node.argument, isBinding, refDestructuringErrors)
+          this.toAssignable(node.argument, isBinding, refDestructuringErrors)
+          if (node.argument.type === "AssignmentPattern")
+            this.raise(node.argument.start, "Rest elements cannot have a default value")
+          return
         }
       }
       return nextMethod.apply(this, arguments)
     })
+    instance.extend("toAssignableList", nextMethod => function (exprList, isBinding) {
+      const result = nextMethod.call(this, exprList, isBinding)
+      if (exprList.length && exprList[exprList.length - 1] && exprList[exprList.length - 1].type === "RestElement") {
+        // Backport check from 5.3.0
+        if (exprList[exprList.length - 1].argument.type === "AssignmentPattern")
+          this.raise(exprList[exprList.length - 1].argument.start, "Rest elements cannot have a default value")
+      }
+      return result
+    })
+
     instance.extend("checkPatternExport", nextMethod => function(exports, pat) {
       if (pat.type == "ObjectPattern") {
         for (let prop of pat.properties)
