@@ -1,5 +1,9 @@
 # acorn5-object-spread changelog
 
+## 5.1.1
+
+* Backport check for default values from acorn 5.3.0
+
 ## 5.1.0
 
 * Make plugin compatible with acorn 5.3.x
