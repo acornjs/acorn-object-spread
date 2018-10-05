@@ -64,7 +64,7 @@ var fbTestFixture = {
             },
             "properties": [
               {
-                "type": "SpreadProperty",
+                "type": "SpreadElement",
                 "start": 9,
                 "end": 13,
                 "loc": {
@@ -211,7 +211,7 @@ var fbTestFixture = {
               }
             },
             {
-              "type": "SpreadProperty",
+              "type": "SpreadElement",
               "start": 8,
               "end": 12,
               "loc": {
@@ -325,7 +325,7 @@ var fbTestFixture = {
             }
           },
           {
-            "type": "SpreadProperty",
+            "type": "SpreadElement",
             "start": 5,
             "end": 9,
             "loc": {
@@ -406,7 +406,7 @@ var fbTestFixture = {
             }
           },
           {
-            "type": "SpreadProperty",
+            "type": "SpreadElement",
             "start": 14,
             "end": 18,
             "loc": {
