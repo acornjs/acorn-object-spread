@@ -4,6 +4,9 @@ module.exports = function(acorn) {
   var tt = acorn.tokTypes;
   var pp = acorn.Parser.prototype;
 
+  var originalCheckLVal = pp.checkLVal;
+  var originalToAssignable = pp.toAssignable;
+
   // this is the same parseObj that acorn has with...
   function parseObj(isPattern, refDestructuringErrors) {
     let node = this.startNode(), first = true, propHash = {}
@@ -42,8 +45,52 @@ module.exports = function(acorn) {
     return this.finishNode(node, isPattern ? "ObjectPattern" : "ObjectExpression")
   }
 
+  function toAssignable(node, isBinding) {
+    if (this.options.ecmaVersion >= 6 && node) {
+      switch (node.type) {
+        case "AssignmentPattern":
+          break;
+
+        case "Property":
+          this.toAssignable(node.value, isBinding);
+          break;
+
+        case "SpreadProperty":
+          node.type = "RestProperty";
+          break;
+
+        default:
+          originalToAssignable.call(this, node, isBinding);
+          break;
+      }
+    }
+    return node;
+  };
+
+  function checkLVal(expr, isBinding, checkClashes) {
+    switch (expr.type) {
+      case "ObjectPattern":
+        for (var i = 0; i < expr.properties.length; i++) {
+          let prop = expr.properties[i];
+          if (prop.type === "Property") prop = prop.value;
+          this.checkLVal(prop, isBinding, checkClashes);
+        }
+        break;
+
+      case "RestProperty":
+        this.checkLVal(expr.argument, isBinding, checkClashes);
+        break;
+
+      default:
+        originalCheckLVal.call(this, expr, isBinding, checkClashes);
+        break;
+    }
+  };
+
   acorn.plugins.objectSpread = function objectSpreadPlugin(instance) {
+    pp.checkLVal = checkLVal;
     pp.parseObj = parseObj;
+    pp.toAssignable = toAssignable;
   };
 
   return acorn;
